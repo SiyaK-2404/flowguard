@@ -1,12 +1,11 @@
 #include <iostream>
 #include <thread>
-#include <chrono>
 
-#include "tokenbucket.hpp"
+#include "slidingwindowcounter.hpp"
 
 int main()
 {
-    TokenBucket limiter(5, 1);
+    SlidingWindowCounter limiter(3, std::chrono::seconds(5));
 
     for (int i = 1; i <= 5; i++)
     {
@@ -19,7 +18,7 @@ int main()
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
-    for (int i = 6; i <= 10; i++)
+    for (int i = 6; i <= 8; i++)
     {
         std::cout << "Request " << i << ": "
                   << (limiter.allow("Alice") ? "Allowed" : "Rejected")

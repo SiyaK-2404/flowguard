@@ -7,7 +7,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-add_executable(FlowGuard
-    main.cpp
-    src/TokenBucket.cpp
+# Library
+add_library(FlowGuard
+    src/tokenbucket.cpp
+    src/fixedwindow.cpp
+    src/slidingwindowlog.cpp
+    src/slidingwindowcounter.cpp
 )
+
+# Benchmark executable
+add_executable(benchmark
+    benchmark/benchmark.cpp
+)
+
+target_link_libraries(benchmark FlowGuard)
+
+# Simulator executable
+add_executable(simulator
+    simulator/simulator.cpp
+)
+
+target_link_libraries(simulator FlowGuard)
